@@ -23,13 +23,12 @@ def main():
 	return render_template('index.html',title='MainForm',form=form)	
 
 
-@app.route('/_get_oyente', methods=['GET'])
+@app.route('/_get_oyente', methods=['POST'])
 def get_oyente():
 	########################## 
 	# Put Oyente Function Here
 	##########################
-	
-	o = Oyente()
+	o = Oyente(request.form['code'])
 	output = {"Result":o.oyente(o.s)}
 	return STATUS_OK("Done",output)
 

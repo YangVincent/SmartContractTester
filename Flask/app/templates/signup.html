@@ -1,0 +1,129 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">        
+<!-- Login Form -->
+<link href=static/css/login.css rel="stylesheet">
+</head>
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">T<span class="orange">F</span></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/home">Dashboard</a></li>
+        <li><a href="/build">Build New</a></li>
+        <li><a href="/status">Job Status</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Templates <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a onclick="Template('MNIST');">MNIST</a></li>
+            <li><a onclick="Template('Inception-v4');">Inception-v4</a></li>
+            <li><a onclick="Template('ResNet');">ResNet</a></li>
+            <li><a onclick="Template('AlexNet');">AlexNet</a></li>
+            <li class="divider"></li>
+            <li>
+              <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-search">Search</button>
+            </form>
+            </li>            
+          </ul>
+        </li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dd-login"><b>Login</b> <span class="caret"></span></a>
+            <ul id="login-dp" class="dropdown-menu">
+                <li>
+                     <div class="row">
+                            <div class="col-md-12">
+                                <div class="social-buttons">
+                                    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i><span class="social">Facebook</span></a>
+                                    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i><span class="social">Twitter</a>
+                  <a href="#" class="btn btn-google"><i class="fa fa-google"></i><span class="social">Google</a>
+                  <a href="#" class="btn btn-github"><i class="fa fa-github"></i><span class="social">Github</span></a>
+                                </div>
+                                 <form class="form" role="form" method="post" action="#" accept-charset="UTF-8" id="login-nav" style="padding: 4px;">
+                                        <div class="form-group">
+                                             <label class="sr-only" for="nav-uname">Email address</label>
+                                             <input type="text" class="form-control" id="nav-uname" placeholder="Enter Username" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="sr-only" for="nav-psw">Password</label>
+                                             <input type="password" class="form-control" id="nav-psw" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget your password ?</a></div>
+                                        </div>
+                                        <div class="form-group">
+                                             <button type="button" class="btn btn-primary btn-block" id="btn-login" data-toggle="dropdown">Sign in</button>
+                                        </div>
+                                        <div class="checkbox">
+                                             <label>
+                                             <input type="checkbox" id="nav-remember"> Remember Me
+                                             </label>
+                                        </div>
+                                 </form>
+                            </div>
+                            <div class="bottom text-center">
+                                No account? <a href="/signup"><b>Sign Up Here</b></a>
+                            </div>
+                     </div>
+                </li>
+            </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<form action="#">
+    {{ form.csrf_token }} 
+    <div class="imgcontainer">
+        <!-- <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
+    </div>  
+    <div class="container">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 main-form">
+        <label for="uname"><b>Username</b></label>    
+        <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
+        <p for="uname" class="error" id="uname-err"></p>    
+
+        <label for="email"><b>Email</b></label>    
+        <input type="text" placeholder="email@domain.com" name="email" id="email" required>
+        
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        
+        <label for="cpsw"><b>Confirm Password</b></label>
+        <input type="password" placeholder="Confirm Password" name="cpsw" id="cpsw" required>        
+        <p for="cpsw" class="error" id="cpsw-err"></p>    
+
+        <button type="button" id="signup" name="signup">Sign Up</button>
+        <p for="signup" class="error" id="signup-err"></p>  
+        <label><input type="checkbox" checked="checked" id="remember"> Remember me </label>        
+
+        <div class="row btn-row">
+        <button type="button" class="cancelbtn" onclick="window.location.href='.'" href="/status">Cancel</button>
+        <span class="psw">Have an account? <a href="/login">Login</a></span>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+    </div>   
+</form>
+<script type="text/javascript" src="static/js/signup.js"></script>
+{% endblock %}

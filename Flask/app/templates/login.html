@@ -1,0 +1,36 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">        
+<!-- Login Form -->
+<link href=static/css/login.css rel="stylesheet">
+
+</head>
+
+<form action="#">
+    {{ form.csrf_token }} 
+    <div class="imgcontainer">
+        <!-- <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
+    </div>  
+    <div class="container">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 main-form">
+        <label for="uname"><b>Username</b></label>    
+        <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
+        
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                
+        <button type="submit" onclick="End();">Login</button>
+        <label><input type="checkbox" checked="checked" id="remember"> Remember me </label>
+        
+        <div class="row btn-row">
+        <button type="button" class="cancelbtn" onclick="ClearStorage();">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+    </div>   
+</form>
+{% endblock %}

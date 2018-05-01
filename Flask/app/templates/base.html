@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">   
+    
+    <!--jQuery-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
+
+    <!-- Bootstrap Core CSS -->    
+    <link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css rel="stylesheet">
+    <link href=static/css/bootstrap.css rel="stylesheet">        
+    <script src="static/js/bootstrap.js"></script>
+    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- d3.v4 & Sequential Color Scales (Such as interpolateInferno()) -->
+    <script src="static/js/d3.v4.min.js"></script>
+    <script src="static/js/d3-scale-chromatic.v0.3.min.js"></script> 
+
+    <!-- JQuery / JQuery UI -->
+    <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">       
+
+    <!-- Global -->
+    <script type="text/javascript" src="static/js/global.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+  </head>
+  <body>       
+    {% block content %}                    
+    {% endblock %} 
+    <div class="row col-md-12" id="message-row">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul id="messages">
+                {% for message in messages %}
+                    <h4><font color='blue'>{{ message }} </font></h4>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}    
+  </div> <!-- Header -->                 
+  </body>  
+</html>

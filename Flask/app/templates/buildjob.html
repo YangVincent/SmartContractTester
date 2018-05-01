@@ -1,0 +1,191 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <!-- Javascript files -->    
+    <script src="static/js/util.js" ></script> 
+    <script src="static/js/ui.js" ></script> 
+    <!-- Style -->
+    <link href="static/css/buildjob.css" rel="stylesheet">  
+</head>
+
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">T<span class="orange">F</span></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/home">Dashboard</a></li>
+        <li class="active"><a href="/">Build New</a></li>
+        <li><a href="/status">Job Status</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Templates <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a onclick="Template('MNIST');">MNIST</a></li>
+            <li><a onclick="Template('Inception-v4');">Inception-v4</a></li>
+            <li><a onclick="Template('ResNet');">ResNet</a></li>
+            <li><a onclick="Template('AlexNet');">AlexNet</a></li>
+            <li class="divider"></li>
+            <li>
+              <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-search">Search</button>
+            </form>
+            </li>            
+          </ul>
+        </li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dd-login"><b>Login</b> <span class="caret"></span></a>
+            <ul id="login-dp" class="dropdown-menu">
+                <li>
+                     <div class="row">
+                            <div class="col-md-12">
+                                <div class="social-buttons">
+                                    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i><span class="social">Facebook</span></a>
+                                    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i><span class="social">Twitter</a>
+                  <a href="#" class="btn btn-google"><i class="fa fa-google"></i><span class="social">Google</a>
+                  <a href="#" class="btn btn-github"><i class="fa fa-github"></i><span class="social">Github</span></a>
+                                </div>
+                                 <form class="form" role="form" method="post" action="#" accept-charset="UTF-8" id="login-nav" style="padding: 4px;">
+                                        <div class="form-group">
+                                             <label class="sr-only" for="nav-uname">Email address</label>
+                                             <input type="text" class="form-control" id="nav-uname" placeholder="Enter Username" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="sr-only" for="nav-psw">Password</label>
+                                             <input type="password" class="form-control" id="nav-psw" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget your password ?</a></div>
+                                        </div>
+                                        <div class="form-group">
+                                             <button type="button" class="btn btn-primary btn-block" id="btn-login" data-toggle="dropdown">Sign in</button>
+                                        </div>
+                                        <div class="checkbox">
+                                             <label>
+                                             <input type="checkbox" id="nav-remember"> Remember Me
+                                             </label>
+                                        </div>
+                                 </form>
+                            </div>
+                            <div class="bottom text-center">
+                                No account? <a href="/signup"><b>Sign Up Here</b></a>
+                            </div>
+                     </div>
+                </li>
+            </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<form action="#" method="post" name="Sub" enctype=multipart/form-data class="invis">
+{{ form.csrf_token }}
+{{ form.name }}
+<div class="col-lg-12 invis" >
+<div class="panel panel-default main">
+<div class="panel-body">
+    <div class="col-md-7" id="form">
+	<table class="table table-striped">	                
+        <tr>
+            <th>Project:</th>
+            <td>{{ form.project }}<br>
+            	<!-- Error Handling -->
+                {% for error in form.project.errors %} 
+                    <small><span style="color: red;">[{{ error }}]</span></small>
+                {% endfor %}
+            </td>
+        </tr>        
+        <tr>
+            <th>Input Size:</th>
+            <td>{{ form.input_size }}</td>
+        </tr>
+        <tr>
+            <th>Add Layer:</th>
+            <td id="layers">
+
+            </td>            
+        </tr>
+        <tr>
+            <th>Comments:</th>
+            <td>{{ form.comments }}<br>
+                {% for error in form.comments.errors %} 
+                    <small><span style="color: red;">[{{ error }}]</span></small>
+                {% endfor %}
+            </td>
+        </tr>           
+    </table>    
+    <i class="fa fa-caret-down expand" id="expand-advanced"> Advanced </i>
+    <table class="table table-striped expand" style="display:none;">
+        <tr>
+            <th>Loss Function:</th>
+            <td>{{ form.loss }}</td>
+        </tr>
+        <tr>
+            <th>Optimizer:</th>
+            <td id="opts">
+                {{ form.Optimizer }}<br>
+                {% for error in form.Optimizer.errors %}
+                    <small><span style="color: red;">[{{ error }}]</span></small>
+                {% endfor %}
+            </td>
+        </tr> 
+        <tr>
+            <th> Batch Size </th>
+            <td> {{ form.batch_size }} </td>
+        </tr>
+        <tr>
+            <th> Shuffle Batch ?</th>
+            <td> {{ form.shuffle_batch }} </td>
+        </tr>
+        <tr>
+            <th> Training Steps </th>
+            <td> {{ form.training_steps}} </td>
+        </tr>        
+    </table>
+    <i class="fa fa-caret-up expand" id="collapse-advanced" style="display:none;"> Advanced </i>   
+
+    <div class='row'>                        		
+        <div class='col-sm-6' align='center' id="arch"> 
+            <!-- <input  type="submit" name="submit" value="Submit" onclick="submit_layers();"></button> -->
+            <button  type="button" name="submit" onclick="submit_layers();" id="submit">Submit</button>                       
+        </div><!-- Submit Button -->                	
+        <div class='col-sm-6' align='center'> 
+            <input type="button" value="Clear" onclick="Clear();" data-toggle="tooltip"  data-placement="right" title="Resets all elements to their default values.">
+        </div><!-- Reset Button -->       
+        <br>
+    </div> <!-- row (submit) -->
+</div>
+<div class="col-md-5" id="tbl-col">    
+    <div id="network-arch"></div>    
+    <div class="well toolbar">
+        <div class="col-md-4"><i class="fa fa-edit" id="tool-edit"><span class="toolbar">Edit</span></i></div>
+        <div class="col-md-4"><i class="fa fa-plus-circle" id="tool-copy"><span class="toolbar">Copy</span></i></div>
+        <div class="col-md-4"><i class="fa fa-trash" id="tool-delete"><span class="toolbar">Delete</span></i></div>        
+    </div>
+</div>
+</div>
+
+</div> <!-- Panel-Body -->
+</div> <!-- panel-default -->
+</div> <!-- <div> col-lg-12 -->	        	        
+</form>    
+
+<script src="static/js/layers.js"></script> 
+{% endblock %}

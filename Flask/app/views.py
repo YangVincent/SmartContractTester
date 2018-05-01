@@ -5,9 +5,14 @@ from app import app, csrf
 from .responses import * 
 from .forms import * 
 
+########################## 
+# OYENTE Imports
+from .oyente import Oyente
+########################## 
+
 
 #############################################
-# 		Page Rendering Functions
+#		Page Rendering Functions
 #############################################
 
 @app.route('/', methods=['GET', 'POST'])
@@ -23,7 +28,9 @@ def get_oyente():
 	########################## 
 	# Put Oyente Function Here
 	##########################
-	output = {"Var1":0}
+	
+	o = Oyente()
+	output = {"Result":o.oyente(o.s)}
 	return STATUS_OK("Done",output)
 
 

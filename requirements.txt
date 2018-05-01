@@ -5,3 +5,5 @@ pandas==0.22.0
 SQLAlchemy==1.2.4
 Werkzeug==0.14.1
 WTForms==2.1
+docker==3.3.0
+docker-pycreds==0.2.3

@@ -29,7 +29,8 @@ def get_oyente():
 	# Put Oyente Function Here
 	##########################
 	o = Oyente(request.form['code'])
-	output = {"Result":o.oyente(o.s)}
+	info, errors = o.oyente(o.s)
+	output = {"info":info, "errors": errors}
 	return STATUS_OK("Done",output)
 
 

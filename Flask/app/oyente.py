@@ -75,6 +75,36 @@ class Oyente:
                 for i in range(len(row_res)):
                     row_res[i] = row_res[i].strip()
                 results.append(row_res[2:])
+
+    def parse_output(self, result):
+
+        info = []
+        errors = []
+        lines = result.split('INFO:symExec:')
+        start_marker = '============ Results ==========='
+        end_marker = '====== Analysis Completed ======'
+        scanning = False
+        for line in lines:
+            if start_marker in line:     
+                scanning = True
+                continue
+
+            s = re.split(r'([a-zA-Z]+.sol:\d+:\d+:)', line)
+            if len(s) == 1 and scanning:
+                if end_marker in line:
+                    scanning = False
+                    continue
+
+                row_res = line.split(':')
+                for i in range(len(row_res)):
+                    row_res[i] = row_res[i].strip()
+                info.append(tuple(row_res))
+
+            if len(s) > 1:
+                for i in range(1, len(s)-2, 2):
+                    errors.append((s[i], s[i+1]))
+
+        return(info, errors)
     
     def oyente(self, s):
         code_name = 'test_file.sol'
@@ -95,10 +125,12 @@ class Oyente:
         container.stop()
         container.remove()
         
-        result = r[1].decode('utf-8').split('\n')
-        organized_result = self.parse_result(result)
+        # result = r[1].decode('utf-8').split('\n')
+        result = r[1].decode('utf-8')
+        # organized_result = self.parse_result(result)
+        info, errors = self.parse_output(result)
     
-        return(organized_result)
+        return(info, errors)
     
 if __name__ == '__main__':
     o = Oyente()

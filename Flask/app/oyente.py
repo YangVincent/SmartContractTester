@@ -1,5 +1,7 @@
+import regex as re
 import docker
 import os
+
 
 class Oyente:
     def __init__(self, s):

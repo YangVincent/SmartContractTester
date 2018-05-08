@@ -1,9 +1,10 @@
+docker==3.3.0
+docker-pycreds==0.2.3
 Flask==0.12.2
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 pandas==0.22.0
+regex==2018.2.21
 SQLAlchemy==1.2.4
 Werkzeug==0.14.1
 WTForms==2.1
-docker==3.3.0
-docker-pycreds==0.2.3

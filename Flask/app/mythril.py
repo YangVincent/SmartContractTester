@@ -34,8 +34,8 @@ class Mythril:
         f.write(code)
         f.close()
 
-    def start_container(self, client, image):
-        container = client.containers.run(image, tty=True, detach=True)
+    def start_container(self, s, client, image):
+        container = client.containers.run(image, '/bin/bash', tty=True, detach=True) #ERROR AT THIS LINE
         return(container)
 
     def docker_cp(self, filename, dest, container):
@@ -43,17 +43,18 @@ class Mythril:
         os.system(cmd)
 
     def mythril(self, s):
-        file_name = 'test_file_mythril.sol'
+        file_name = 'mythril_test.sol'        
         image = 'blackwatertepes/mythril'
 
         #create and start docker container
         client = self.create_docker_client()
         self.write_file(s, file_name)
-        container = self.start_container(client, image)
-
+        container = self.start_container(s, client, image)
+        
         #copy the test file to the docker
-        self.docker_cp(file_name, ':/mythril_test', container) 
-        result = container.exec_run('myth -xo json ' + file_name)
+        cmd = 'myth -xo json ' + file_name
+        self.docker_cp(file_name, ':/mythril_test.sol', container) 
+        result = container.exec_run(cmd)
 
         #remove the code and stop the docker container
         os.system('rm ' + file_name)

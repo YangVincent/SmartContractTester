@@ -44,7 +44,7 @@ class Mythril:
 
     def mythril(self, s):
         file_name = 'test_file_mythril.sol'
-        image = 'docker pull blackwatertepes/mythril'
+        image = 'blackwatertepes/mythril'
 
         #create and start docker container
         client = self.create_docker_client()

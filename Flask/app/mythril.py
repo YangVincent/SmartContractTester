@@ -64,8 +64,8 @@ class Mythril:
 
         #remove the code and stop the docker container
         os.system('rm ' + file_name)
-        #container.stop()
-        #container.remove()
+        container.stop()
+        container.remove()
 
         return result #result should be a json (emtpy if no errors)
 

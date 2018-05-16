@@ -34,8 +34,8 @@ class Mythril:
         f.write(code)
         f.close()
 
-    def start_container(self, s, client, image):
-        container = client.containers.run(image, '/bin/bash', tty=True, detach=True) #ERROR AT THIS LINE
+    def start_container(self, client, image):
+        container = client.containers.run(image, '/bin/bash', tty=True, detach=True)
         return(container)
 
     def docker_cp(self, filename, dest, container):
@@ -49,17 +49,23 @@ class Mythril:
         #create and start docker container
         client = self.create_docker_client()
         self.write_file(s, file_name)
-        container = self.start_container(s, client, image)
+        container = self.start_container(client, image)
         
         #copy the test file to the docker
-        cmd = 'myth -xo json ' + file_name
         self.docker_cp(file_name, ':/mythril_test.sol', container) 
+
+        #run mythril on HoneyPot contract
+        pip_cmd = 'apt-get install python3'
+        mythril_upgrade_cmd = 'pip3 install mythril==0.12.0'
+        container.exec_run(pip_cmd)
+        container.exec_run(mythril_upgrade_cmd)
+        cmd = 'myth -xo json ' + file_name
         result = container.exec_run(cmd)
 
         #remove the code and stop the docker container
         os.system('rm ' + file_name)
-        container.stop()
-        container.remove()
+        #container.stop()
+        #container.remove()
 
         return result #result should be a json (emtpy if no errors)
 

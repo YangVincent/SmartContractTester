@@ -4,6 +4,7 @@ from werkzeug import secure_filename
 from app import app, csrf
 from .responses import * 
 from .forms import * 
+import regex as re
 
 ########################## 
 # OYENTE Imports
@@ -39,8 +40,10 @@ def _get_mythril():
 	########################## 
 	# Put Mythril Function Here
 	##########################
-	output = {"Var1":0}
-	return STATUS_OK("Done",output)
+	o = Oyente(request.form['code'])
+	result = o.oyente(o.s)
+	output = result[1].decode('utf-8')
+	return STATUS_OK("Done", output)
 
 @app.route('/_get_stats', methods=['GET'])
 def _get_stats():

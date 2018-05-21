@@ -11,6 +11,11 @@ import regex as re
 from .oyente import Oyente
 ########################## 
 
+############################
+# MYTRHIL Imports
+from .mythril import Mythril
+############################
+
 
 #############################################
 #		Page Rendering Functions
@@ -21,29 +26,55 @@ def main():
 	form = MainForm()
 	if form.validate_on_submit():
 		flash("This message appears after clicking submit!")	
-	return render_template('index.html',title='MainForm',form=form)	
+	return render_template('newjob.html',title='MainForm',form=form)
 
+@app.route('/home', methods=['GET'])
+def home():
+	return render_template('home.html',title='Home Page')
+
+@app.route('/build', methods=['GET'])
+def newjob():
+	return render_template('newjob.html',title='New Job')	
+
+@csrf.exempt
+@app.route('/submit', methods=['POST'])
+def submit():
+
+	test_subject = request.form.get('data')
+	output = []
+	print(test_subject)
+	if request.form.get('oyente'):
+		get_oyente(test_subject)
+#	if request.form.get('mythril'):
+#		output.append(get_mytrhil(test_subject))
+
+#	return output
+	return ''
 
 @app.route('/_get_oyente', methods=['POST'])
-def get_oyente():
+def get_oyente(test_subject):
 	########################## 
 	# Put Oyente Function Here
 	##########################
-	o = Oyente(request.form['code'])
-	info, errors = o.oyente(o.s)
+	print('hello')
+	o = Oyente(test_subject)
+	print('h')
+	info, errors = o.oyente(test_subject)
+	print('e')
 	output = {"info":info, "errors": errors}
-	return STATUS_OK("Done",output)
+	print('l')
+	return output
 
 
-@app.route('/_get_mythril', methods=['GET'])
-def _get_mythril():
+@app.route('/_get_mythril', methods=['POST'])
+def get_mythril(test_subject):
 	########################## 
 	# Put Mythril Function Here
 	##########################
-	o = Oyente(request.form['code'])
-	result = o.oyente(o.s)
+	m = Mythril(test_subject)
+	result = m.mythril(test_subject)
 	output = result[1].decode('utf-8')
-	return STATUS_OK("Done", output)
+	return output
 
 @app.route('/_get_stats', methods=['GET'])
 def _get_stats():
@@ -114,5 +145,3 @@ def sub_operation(line, key=None):
 				new_lines.append(" ".join(tmp_line))
 
 	return new_lines				
-
-

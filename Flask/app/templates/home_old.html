@@ -16,7 +16,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">S<span class="orange">C</span></a>
+      <a class="navbar-brand" href="/">T<span class="orange">F</span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -25,6 +25,24 @@
         <li class="active"><a href="/home">Dashboard</a></li>
         <li><a href="/build">Build New</a></li>
         <li><a href="/status">Job Status</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job Templates <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a onclick="Template('MNIST');">MNIST</a></li>
+            <li><a onclick="Template('Inception-v4');">Inception-v4</a></li>
+            <li><a onclick="Template('ResNet');">ResNet</a></li>
+            <li><a onclick="Template('AlexNet');">AlexNet</a></li>
+            <li class="divider"></li>
+            <li>
+              <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-search">Search</button>
+            </form>
+            </li>            
+          </ul>
+        </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -78,9 +96,9 @@
 <div class="col-md-4 panel"> 
 <h3> News </h3>
 <ul> 
-  <li> <a href="#"> Forbes claims Gauntlet the new best tool of 2018 </a> </li>
-  <li> <a href="#"> How Gauntlet has changed the face of research </a> </li>
-  <li> <a href="#"> UCD students' back-to-back ground-shattering projects </a> </li>
+  <li> <a href="#"> Forbes claims TensorFloss the new best tool of 2018 </a> </li>
+  <li> <a href="#"> How TensorFloss has changed the face of research </a> </li>
+  <li> <a href="#"> UCD students the most qualified for OS research </a> </li>
 </ul>
 </div>
 

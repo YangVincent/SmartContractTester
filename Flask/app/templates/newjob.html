@@ -1,11 +1,13 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
 {% block content %}
+
+<script src="static/js/newjob.js"></script>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">        
-<!-- Style -->
-<link href="static/css/home.css" rel="stylesheet">  
+	<link href="static/css/newjob.css" rel="stylesheet">  
 </head>
+
 <nav class="navbar navbar-default navbar-inverse" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,8 +24,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/home">Dashboard</a></li>
-        <li><a href="/build">Build New</a></li>
+        <li><a href="/home">Dashboard</a></li>
+        <li class="active"><a href="/">New Job</a></li>
         <li><a href="/status">Job Status</a></li>
       </ul>
       
@@ -73,35 +75,26 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-
 <div class="col-lg-12 home"> 
-<div class="col-md-4 panel"> 
-<h3> News </h3>
-<ul> 
-  <li> <a href="#"> Forbes claims Gauntlet the new best tool of 2018 </a> </li>
-  <li> <a href="#"> How Gauntlet has changed the face of research </a> </li>
-  <li> <a href="#"> UCD students' back-to-back ground-shattering projects </a> </li>
-</ul>
+	<div class="col-md-2 panel"> 
+		<h3> Tools </h3>
+		<input type="checkbox" id="tool-oyente" value="Oyente">Oyente<br>
+		<input type="checkbox" id="tool-mythril" value="Mythril">Mythril<br>
+		<h3> Options </h3>
+		<input type="checkbox" id="option-mutants" value="Mutants">Use Mutants<br>
+	</div>
+	<div class="col-md-6 panel" style="height:750px;">
+		<h3> Smart Contract </h3>
+		<div class="editor-container" id="editor"></div>
+	</div>
+	<div class="col-md-4 panel">
+		<h3> Output </h3>
+		<button type="button" class="btn btn-primary btn-block" onclick="return submit_job();">Run Tests!</button>
+	</div>
 </div>
 
-<div class="col-md-4 panel"> 
-  <h3> Build New </h3>
-  <p> Build a New Network with <a href="/build"> Build New </a></p>
-  <p> Or start from a list of templates with </p>
-  <ul> 
-    <li><a onclick="Template('MNIST');">MNIST</a></li>
-    <li><a onclick="Template('Inception-v4');">Inception-v4</a></li>
-    <li><a onclick="Template('ResNet');">ResNet</a></li>
-    <li><a onclick="Template('AlexNet');">AlexNet</a></li>
-  </ul>
-</div>
-
-<div class="col-md-4 panel"> 
-  <h3> Current Jobs </h3>
-  <div id="short-tbl"></div>
-</div>
-
-</div>
-<script src="static/js/home.js"></script> 
+<script>
+	inject_editor("editor");
+</script>
 
 {% endblock %}

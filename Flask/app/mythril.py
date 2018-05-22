@@ -2,7 +2,8 @@ import docker
 import os
 
 class Mythril:
-    def __init__(self):
+    def __init__(self, s):
+        if not s:
             self.s = """
                 contract HoneyPot {
                     mapping (address => uint) public balances;
@@ -23,6 +24,8 @@ class Mythril:
                     }
                 }
                 """
+        else:
+            self.s = s
 
     def create_docker_client(self):
         client = docker.from_env()
@@ -70,5 +73,5 @@ class Mythril:
         return result #result should be a json (emtpy if no errors)
 
 if __name__ == '__main__':
-    m = Mythril()
+    m = Mythril(None)
     print(m.mythril(m.s))

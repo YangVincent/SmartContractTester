@@ -135,5 +135,5 @@ class Oyente:
         return(info, errors)
     
 if __name__ == '__main__':
-    o = Oyente()
+    o = Oyente(None)
     print(o.oyente(o.s))

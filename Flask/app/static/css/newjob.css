@@ -6,3 +6,7 @@
 	left: 0;
 	margin-top: 50; 
 }
+
+td {
+	vertical-align: top;
+}

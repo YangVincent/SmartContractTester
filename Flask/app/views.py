@@ -41,28 +41,23 @@ def newjob():
 def submit():
 
 	test_subject = request.form.get('data')
-	output = []
-	print(test_subject)
-	if request.form.get('oyente'):
-		get_oyente(test_subject)
-#	if request.form.get('mythril'):
-#		output.append(get_mytrhil(test_subject))
+	output = {}
 
-#	return output
-	return ''
+	if request.form.get('oyente') == 'true':
+		output['oyente'] = get_oyente(test_subject)
+	if request.form.get('mythril') == 'true':
+		output['mythril'] = get_mythril(test_subject)
+
+	return jsonify(output)
 
 @app.route('/_get_oyente', methods=['POST'])
 def get_oyente(test_subject):
 	########################## 
 	# Put Oyente Function Here
 	##########################
-	print('hello')
 	o = Oyente(test_subject)
-	print('h')
 	info, errors = o.oyente(test_subject)
-	print('e')
 	output = {"info":info, "errors": errors}
-	print('l')
 	return output
 
 

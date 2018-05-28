@@ -29,7 +29,7 @@ function submit_job() {
 		data: jsondata,
 		success:function(json) {
 			output = json;
-
+			alert(JSON.stringify(json));
 			d3.selectAll('#loading').remove();
 			var container = d3.select('#output').append('div').attr('id', 'result');
 
@@ -104,6 +104,24 @@ function submit_job() {
 					desc.append('td').text('Description:');
 					desc.append('td').text(d['description']);
 				}
+			}
+
+			if (output['oyente_mutations']) {
+				// Print oyente mutations
+				// which is just a list of 
+				// same output returned by get_oyente
+			}
+
+			if (output['mythril_mutations']) {
+				// Print mythril mutations
+				// which is just a list of 
+				// same output returned by get_mythril
+			}
+
+			if (output['stats']) {
+				// Prints stats for the script
+				// Which is a dictionary of the form
+				// {"LOC":line_count, "Dependencies":dependencies, "Cyclomatic_Complexity":complexity}
 			}
 		}
 	});

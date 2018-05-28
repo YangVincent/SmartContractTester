@@ -152,7 +152,6 @@ def get_all_tests(file_name):
 		   "mythril":mythril_results, "oyente":oyente_results,
 		   "mythril_mutations":mythril_mutations, "oyente_mutations":oyente_mutations}
 
-
 	return dic
 
 def read_all_tests():

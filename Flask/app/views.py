@@ -35,10 +35,8 @@ def newjob():
 @app.route('/submit', methods=['POST'])
 def submit():
 
-	print("Im in here!")
 	test_subject = request.form.get('data')
 	output = {}
-	print('request.form')
 
 	if request.form.get('oyente') == 'true':
 		print("oyente = true")
@@ -56,37 +54,63 @@ def submit():
 	print(output)
 	return jsonify(output)
 
-def get_oyente(test_subject):
+@csrf.exempt
+@app.route('/get_oyente', methods=['POST'])
+def get_oyente(test_subject=None):
+
+	is_request = False
+	if not test_subject:
+		test_subject = request.form.get('data')
+		is_request = True
 
 	o = Oyente(test_subject)
 	info, errors = o.oyente(test_subject)
 	
 	if len(errors) > 0:
-		errors = [{'lineno':":".join(e[0].split(':')[1:3]),'code':"\n".join(e[1].split('\n')[1:]),'description':e[1].split('\n')[0]} for e in errors]
+		errors = [{'lineno':e[0].split(':')[1],'code':"\n".join(e[1].split('\n')[1:]),'description':e[1].split('\n')[0]} for e in errors]
 
 	if len(info) > 0:
 		info = [{x[0]:x[1] for x in info}]
 
 	output = {"info":info, "issues": errors, 'error':[]}
+	
+	if is_request:
+		return jsonify(output)
 	return output
 
-def get_mythril(test_subject):
+@csrf.exempt
+@app.route('/get_mythril', methods=['POST'])
+def get_mythril(test_subject=None):
+	
+	is_request = False
+	if not test_subject:
+		test_subject = request.form.get('data')
+		is_request = True
 
 	m = Mythril(test_subject)
 	result = m.mythril(test_subject)
 	output = result[1].decode('utf-8')
-	decoder = json.decoder.JSONDecoder()   	
-	return decoder.decode(result[1].decode('utf-8'))
+	decoder = json.decoder.JSONDecoder()  
+	output = decoder.decode(result[1].decode('utf-8'))
 
-def get_stats(code):
+	if is_request:
+		return jsonify(output)
+	return output
+
+@csrf.exempt
+@app.route('/get_stats', methods=['POST'])
+def get_stats(code=None):
 	'''
 		Retreives some standard statistics of 
 		a given piece of solidity code. 
 	'''	
+	is_request = False
+	if not code:
+		code = request.form.get('data')
+		is_request = True
+
 	clean = re.split(r'\n|//.*|/\*[\s\S]*?\*/',code)
 	lines = [x for x in clean if x and x.strip() != ""]
-
-	print(clean)
 
 	line_count   = len(lines)
 	dependencies = len([x for x in lines if "import" in x])
@@ -94,9 +118,26 @@ def get_stats(code):
 
 	output = {"LOC":line_count, "Dependencies":dependencies, "Cyclomatic_Complexity":complexity}
 
+	if is_request:
+		return jsonify(output)
 	return output
 
-def apply_mutation(code):
+@csrf.exempt
+@app.route('/get_mutations', methods=['POST'])
+def get_mutations(test_subject=None):
+
+	test_subject = request.form.get('data')	
+	output = []
+
+	if request.form.get('suite') == 'mythril':
+		output = [get_mythril(x) for x in apply_mutation(test_subject)]
+	
+	if request.form.get('suite') == 'oyente':
+		output = [get_oyente(x) for x in apply_mutation(test_subject)]
+
+	return jsonify(output)
+
+def apply_mutation(code=None):
 	'''
 		Applies a mutations to each mutatable operation
 		in a piece of code. Returns these mutations as a list.

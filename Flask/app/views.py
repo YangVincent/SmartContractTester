@@ -6,15 +6,9 @@ from .responses import *
 from .forms import * 
 import regex as re
 
-########################## 
-# OYENTE Imports
+# Local Imports
 from .oyente import Oyente
-########################## 
-
-############################
-# MYTRHIL Imports
 from .mythril import Mythril
-############################
 
 
 #############################################
@@ -37,70 +31,69 @@ def newjob():
 	return render_template('newjob.html',title='New Job')	
 
 @csrf.exempt
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['POST', 'GET'])
 def submit():
 
+	print("Im in here!")
 	test_subject = request.form.get('data')
 	output = {}
+	print('request.form')
 
 	if request.form.get('oyente') == 'true':
+		print("oyente = true")
 		output['oyente'] = get_oyente(test_subject)
+		if request.form.get('mutants') == 'true':
+			output['oyente_mutations'] = [get_oyente(x) for x in apply_mutation(test_subject)]
+	
 	if request.form.get('mythril') == 'true':
 		output['mythril'] = get_mythril(test_subject)
+		if request.form.get('mutants') == 'true':
+			output['mythril_mutations'] = [get_mythril(x) for x in apply_mutation(test_subject)]
+	
+	output['stats'] = get_stats(test_subject)
 
+	print(output)
 	return jsonify(output)
 
-@app.route('/_get_oyente', methods=['POST'])
 def get_oyente(test_subject):
-	########################## 
-	# Put Oyente Function Here
-	##########################
+
 	o = Oyente(test_subject)
 	info, errors = o.oyente(test_subject)
 	output = {"info":info, "errors": errors}
 	return output
 
-
-@app.route('/_get_mythril', methods=['POST'])
 def get_mythril(test_subject):
-	########################## 
-	# Put Mythril Function Here
-	##########################
+
 	m = Mythril(test_subject)
 	result = m.mythril(test_subject)
 	output = result[1].decode('utf-8')
 	return output
 
-@app.route('/_get_stats', methods=['GET'])
-def _get_stats():
+def get_stats(code):
 	'''
 		Retreives some standard statistics of 
 		a given piece of solidity code. 
-	'''
-	try:
-		code  = request.form['code']
-		clean = re.split(r'\n|//.*|/\*[\s\S]*?\*/',code)
-		lines = [x for x in clean if x and x.strip() != ""]
-	except:
-		BAD_REQUEST("Unable to parse provided Code.", {})
+	'''	
+	clean = re.split(r'\n|//.*|/\*[\s\S]*?\*/',code)
+	lines = [x for x in clean if x and x.strip() != ""]
+
+	print(clean)
 
 	line_count   = len(lines)
 	dependencies = len([x for x in lines if "import" in x])
 	complexity   = len([x for x in lines if re.search(r'\(',x)])
 
 	output = {"LOC":line_count, "Dependencies":dependencies, "Cyclomatic_Complexity":complexity}
-	STATUS_OK("Done", output)
 
-@app.route('/_apply_mutation', methods=['POST'])
-def _apply_mutation():
+	return output
+
+def apply_mutation(code):
 	'''
 		Applies a mutations to each mutatable operation
 		in a piece of code. Returns these mutations as a list.
 		Note: Returned code is stripped of all comments.
 	'''
 	try:
-		code   = request.form['code']
-		op_key = request.form['op_key']
 		clean  = re.split(r'\n|//.*|/\*[\s\S]*?\*/',code)
 		lines  = [x for x in clean if x and x.strip() != ""]
 	except:
@@ -108,7 +101,7 @@ def _apply_mutation():
 
 	new_codes = []
 	for i, line in enumerate(lines):
-		subs = sub_operation(line, op_key)
+		subs = __sub_operation(line)
 		if len(subs) > 0:
 			for each_sub in subs:			
 				tmp_code    = lines.copy()
@@ -118,7 +111,7 @@ def _apply_mutation():
 	return new_codes
 
 
-def sub_operation(line, key=None):
+def __sub_operation(line, key=None):
 	'''
 		Helper for _apply_mutation(). The key defines which
 		mutations will be made as a list, so multiple 
@@ -127,8 +120,9 @@ def sub_operation(line, key=None):
 	if not key:
 		key = {"+": ["-"],  "-": ["+"],  ">": ["<"],  "<": ["<"],
 			   "/": ["*"],  "*": ["/"],  "&": ["|"],  "|": ["&"],
-			   "&&":["||"], "||":["&&"], "!=":["=="], "==":["!="]}
-
+			   "&&":["||"], "||":["&&"], "!=":["=="], "==":["!="],
+			   "+=":["-="], "-=":["+="], ">=": ["<"], "<=":[">"]}
+	
 	split_line   = line.split()
 
 	new_lines = []
@@ -139,4 +133,4 @@ def sub_operation(line, key=None):
 				tmp_line[i] = each_new_op
 				new_lines.append(" ".join(tmp_line))
 
-	return new_lines				
+	return new_lines	

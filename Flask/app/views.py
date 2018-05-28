@@ -5,6 +5,7 @@ from app import app, csrf
 from .responses import * 
 from .forms import * 
 import regex as re
+import json
 
 # Local Imports
 from .oyente import Oyente
@@ -31,7 +32,7 @@ def newjob():
 	return render_template('newjob.html',title='New Job')	
 
 @csrf.exempt
-@app.route('/submit', methods=['POST', 'GET'])
+@app.route('/submit', methods=['POST'])
 def submit():
 
 	print("Im in here!")
@@ -59,7 +60,14 @@ def get_oyente(test_subject):
 
 	o = Oyente(test_subject)
 	info, errors = o.oyente(test_subject)
-	output = {"info":info, "errors": errors}
+	
+	if len(errors) > 0:
+		errors = [{'lineno':":".join(e[0].split(':')[1:3]),'code':"\n".join(e[1].split('\n')[1:]),'description':e[1].split('\n')[0]} for e in errors]
+
+	if len(info) > 0:
+		info = [{x[0]:x[1] for x in info}]
+
+	output = {"info":info, "issues": errors, 'error':[]}
 	return output
 
 def get_mythril(test_subject):
@@ -67,7 +75,8 @@ def get_mythril(test_subject):
 	m = Mythril(test_subject)
 	result = m.mythril(test_subject)
 	output = result[1].decode('utf-8')
-	return output
+	decoder = json.decoder.JSONDecoder()   	
+	return decoder.decode(result[1].decode('utf-8'))
 
 def get_stats(code):
 	'''

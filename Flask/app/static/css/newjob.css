@@ -10,3 +10,16 @@
 td {
 	vertical-align: top;
 }
+
+.tbl-options, .tbl-stats {
+	width: 100%;
+	margin: 10px 10px;
+}
+
+.tbl-options td, 
+.tbl-stats   td, 
+.tbl-stats   th {
+	width: 25%;
+	text-align: center;
+}
+

@@ -10,6 +10,7 @@ import json
 # Local Imports
 from .oyente import Oyente
 from .mythril import Mythril
+from .smartcheck import SmartCheck
 
 
 #############################################
@@ -73,6 +74,24 @@ def get_oyente(test_subject=None):
 		info = [{x[0]:x[1] for x in info}]
 
 	output = {"info":info, "issues": errors, 'error':[]}
+	
+	if is_request:
+		return jsonify(output)
+	return output
+
+@csrf.exempt
+@app.route('/get_smartcheck', methods=['POST'])
+def get_smartcheck(test_subject=None):
+
+	is_request = False
+	if not test_subject:
+		test_subject = request.form.get('data')
+		is_request = True
+
+	o = SmartCheck(test_subject)
+	results = o.smartcheck(test_subject)
+	
+	output = {"errors":results}
 	
 	if is_request:
 		return jsonify(output)

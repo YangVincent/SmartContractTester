@@ -86,7 +86,7 @@ class Oyente:
         start_marker = '============ Results ==========='
         end_marker = '====== Analysis Completed ======'
         scanning = False
-        for line in lines:
+        for line in lines[:10]:
             if start_marker in line:     
                 scanning = True
                 continue
@@ -102,8 +102,11 @@ class Oyente:
                     row_res[i] = row_res[i].strip()
                 info.append(tuple(row_res))
 
+        for line in lines[10:]:
+            line = line.strip()
+            s = re.split(r'([a-zA-Z]+.sol:\d+:\d+:)', line)
             if len(s) > 1:
-                for i in range(1, len(s)-2, 2):
+                for i in range(1, len(s)-1, 2):
                     errors.append((s[i], s[i+1]))
 
         return(info, errors)

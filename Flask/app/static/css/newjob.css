@@ -27,3 +27,20 @@ td {
 	border-radius: 20px 0px 0px 20px;
 	box-shadow: 0px 0px 1px 1px red inset;
 }
+
+
+.selected
+{
+    background: rgba(255, 50, 50, 0.1);
+    position: absolute;
+    width: 100% !important;
+    left: 0 !important;
+}
+
+.deselected
+{
+    background: #282923;
+    position: absolute;
+    width: 100% !important;
+    left: 0 !important;
+}

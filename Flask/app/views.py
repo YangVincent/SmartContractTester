@@ -91,7 +91,7 @@ def get_smartcheck(test_subject=None):
 	o = SmartCheck(test_subject)
 	results = o.smartcheck(test_subject)
 	
-	output = {"errors":results}
+	output = {"issues":results}
 	
 	if is_request:
 		return jsonify(output)

@@ -106,8 +106,10 @@ function submit_job() {
 	d3.select('#stats').selectAll('*').remove();	
 	print_results("#output1", []);
 	print_results("#output2", []);
+	print_results("#output3", []);
 	d3.select('#id-output1').selectAll('*').remove();	
 	d3.select('#id-output2').selectAll('*').remove();	
+	d3.select('#id-output3').selectAll('*').remove();	
 
 	d3.select('#output').append('p').attr('id', 'loading')
 		.text('Loading... This can take awhile.');

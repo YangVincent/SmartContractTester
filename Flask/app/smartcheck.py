@@ -27,11 +27,11 @@ class SmartCheck:
         for block in blocks[1:]:
             block_lines = block.split('\n')
             cur_err = {}
-            cur_err['ruleId'] = block_lines[0]
+            cur_err['description'] = block_lines[0]
             cur_err['patternId'] = block_lines[1][11:]
-            cur_err['line'] = block_lines[2][6:]
+            cur_err['lineno'] = block_lines[2][6:]
             cur_err['column'] = block_lines[3][8:]
-            cur_err['content'] = block_lines[4][9:]
+            cur_err['code'] = block_lines[4][9:]
             err_list.append(cur_err)
     
         return(err_list)
@@ -51,16 +51,16 @@ class SmartCheck:
         os.system('docker build -t vincent/smartcheck .')
     
         # Run analysis
-        output = subprocess.check_output('docker run -t vincent/smartcheck:latest java -jar solidity-checker-1.0-SNAPSHOT-jar-with-dependencies.jar -p test_file.sol >> res', shell=True)
+        output = subprocess.check_output('docker run -t vincent/smartcheck:latest java -jar smartcheck/target/solidity-checker-1.0-SNAPSHOT-jar-with-dependencies.jar -p smartcheck/target/test_file.sol >> res', shell=True)
         try:
-            res = subprocess.check_output(['docker', 'run', '-t', 'vincent/smartcheck:latest', 'java', '-jar', 'solidity-checker-1.0-SNAPSHOT-jar-with-dependencies.jar', '-p', 'test_file.sol'])
+            res = subprocess.check_output(['docker', 'run', '-t', 'vincent/smartcheck:latest', 'java', '-jar', 'smartcheck/target/solidity-checker-1.0-SNAPSHOT-jar-with-dependencies.jar', '-p', 'smartcheck/target/test_file.sol'])
         except subprocess.CalledProcessError as err:
             print(err)
             return(None)
     
         res = res.decode('utf-8')
     
-        formatted_res = parse_result(res)
+        formatted_res = self.parse_result(res)
         return(formatted_res)
     
 if __name__ == '__main__':

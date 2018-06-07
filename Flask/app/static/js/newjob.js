@@ -99,7 +99,7 @@ function submit_job() {
 		data: editor.session.getValue(),
 		oyente: $("#tool-oyente")[0].checked,
 		mythril: $("#tool-mythril")[0].checked,
-		mythril: $("#tool-smartcheck")[0].checked,
+		smartcheck: $("#tool-smartcheck")[0].checked,
 		mutants: $("#option-mutants")[0].checked
 	};
 
@@ -174,7 +174,25 @@ function submit_job() {
 	}
 
 	if (jsondata.smartcheck) {
-				
+		d3.select('#output').append('p').attr('id', 'loading-smartcheck')
+			.text('Loading SmartCheck Suite ..........');
+		$.ajax({
+			url: '/get_smartcheck',
+			type: 'POST',
+			dataType: 'json',
+			data: jsondata,
+			success:function(json) {
+				if (json) {
+					d3.select("#id-output3").text('SmartCheck').style('display','');
+					smartcheck = json['issues'];
+					smartcheck.map(d=>d['mutant'] = 0);	
+					print_results("#output3", smartcheck);													
+				}else{
+					print_results("#output3", []);													
+				}		
+				d3.select("#loading-smartcheck").remove();			
+			}
+		});		
 	}
 
 	if (jsondata.oyente && jsondata.mutants) {

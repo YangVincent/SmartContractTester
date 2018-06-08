@@ -57,7 +57,7 @@ def submit():
 
 @csrf.exempt
 @app.route('/get_oyente', methods=['POST'])
-def get_oyente(test_subject=None):
+def get_oyente(test_subject=None, mutation=None):
 
 	is_request = False
 	if not test_subject:
@@ -75,13 +75,16 @@ def get_oyente(test_subject=None):
 
 	output = {"info":info, "issues": errors, 'error':[]}
 	
+	if mutation:
+		output['mutation'] = mutation
+
 	if is_request:
 		return jsonify(output)
 	return output
 
 @csrf.exempt
 @app.route('/get_smartcheck', methods=['POST'])
-def get_smartcheck(test_subject=None):
+def get_smartcheck(test_subject=None, mutation=None):
 
 	is_request = False
 	if not test_subject:
@@ -93,13 +96,16 @@ def get_smartcheck(test_subject=None):
 	
 	output = {"issues":results}
 	
+	if mutation:
+		output['mutation'] = mutation
+
 	if is_request:
 		return jsonify(output)
 	return output
 
 @csrf.exempt
 @app.route('/get_mythril', methods=['POST'])
-def get_mythril(test_subject=None):
+def get_mythril(test_subject=None, mutation=None):
 	
 	is_request = False
 	if not test_subject:
@@ -111,6 +117,9 @@ def get_mythril(test_subject=None):
 	output = result[1].decode('utf-8')
 	decoder = json.decoder.JSONDecoder()  
 	output = decoder.decode(result[1].decode('utf-8'))
+
+	if mutation:
+		output['mutation'] = mutation
 
 	if is_request:
 		return jsonify(output)
@@ -149,10 +158,13 @@ def get_mutations(test_subject=None):
 	output = []
 
 	if request.form.get('suite') == 'mythril':
-		output = [get_mythril(x) for x in apply_mutation(test_subject)]
+		output = [get_mythril(x['code'], x['mutation']) for x in apply_mutation(test_subject)]
 	
 	if request.form.get('suite') == 'oyente':
-		output = [get_oyente(x) for x in apply_mutation(test_subject)]
+		output = [get_oyente(x['code'], x['mutation']) for x in apply_mutation(test_subject)]
+
+	if request.form.get('suite') == 'smartcheck':
+		output = [get_smartcheck(x['code'], x['mutation']) for x in apply_mutation(test_subject)]
 
 	return jsonify(output)
 
@@ -175,7 +187,10 @@ def apply_mutation(code=None):
 			for each_sub in subs:			
 				tmp_code    = lines.copy()
 				tmp_code[i] = each_sub
-				new_codes.append("\n".join(tmp_code))
+				new_code = "\n".join(tmp_code)
+				mutation = str(i) + ": " + line
+				new_codes.append({"code":new_code, "mutation":mutation})
+
 
 	return new_codes
 

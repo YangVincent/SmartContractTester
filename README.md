@@ -22,7 +22,7 @@ Once this is done, you can view the app at
 Moreover, since the `debug` flag is set in `run.py`, changing any python file will automatically update the app while running. 
 
 ## Collaboration
-We split up the responsibilities into different sections. 
+We split up the responsibilities into different sections. Everyone did some work on everything.
 
 Doug:
 * Wrote related work, abstract, conclusion, analysis methods, and mutations & static analysis
@@ -55,7 +55,7 @@ various other edits to the paper.
 
 
 ## Directory
-* /report holds the source for our report.
+* /report holds the source for our report and the report.
 * /Flask holds the actual project
-* /SmartContracts holds smart contracts we tested with
-* /TestRuns holds code used for analytics and tests
+* /tests/SmartContracts holds smart contracts we tested with
+* /tests holds code used for analytics and tests

@@ -7,6 +7,7 @@ Solidity files and receives corresponding reports from the analyzers.
 
 ## Running the Flask App ##
 
+To run the app, you need python3.6.
 First, install the required python packages with 
 
 `pip3 install -r requirements.txt`

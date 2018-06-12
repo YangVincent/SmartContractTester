@@ -16,48 +16,29 @@ from .smartcheck import SmartCheck
 #############################################
 #		Page Rendering Functions
 #############################################
+# The following functions load the .HTML documents
+# dynamically for the web application.
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
 	form = MainForm()
 	if form.validate_on_submit():
 		flash("This message appears after clicking submit!")	
-	return render_template('newjob.html',title='MainForm',form=form)
+	return render_template('newjob.html',title='Testing Suites',form=form)	
 
-@app.route('/home', methods=['GET'])
-def home():
-	return render_template('home.html',title='Home Page')
 
-@app.route('/build', methods=['GET'])
-def newjob():
-	return render_template('newjob.html',title='New Job')	
-
-@csrf.exempt
-@app.route('/submit', methods=['POST'])
-def submit():
-
-	test_subject = request.form.get('data')
-	output = {}
-
-	if request.form.get('oyente') == 'true':
-		print("oyente = true")
-		output['oyente'] = get_oyente(test_subject)
-		if request.form.get('mutants') == 'true':
-			output['oyente_mutations'] = [get_oyente(x) for x in apply_mutation(test_subject)]
-	
-	if request.form.get('mythril') == 'true':
-		output['mythril'] = get_mythril(test_subject)
-		if request.form.get('mutants') == 'true':
-			output['mythril_mutations'] = [get_mythril(x) for x in apply_mutation(test_subject)]
-	
-	output['stats'] = get_stats(test_subject)
-
-	print(output)
-	return jsonify(output)
+#############################################
+#	Smart Contract Testing Endpoints
+#############################################
+# Functions for running the smart contract
+# testing suites on a given test script.
 
 @csrf.exempt
 @app.route('/get_oyente', methods=['POST'])
 def get_oyente(test_subject=None, mutation=None):
+	"""
+		Run the Oyente test suite on a provided script
+	"""
 
 	is_request = False
 	if not test_subject:
@@ -85,6 +66,9 @@ def get_oyente(test_subject=None, mutation=None):
 @csrf.exempt
 @app.route('/get_smartcheck', methods=['POST'])
 def get_smartcheck(test_subject=None, mutation=None):
+	"""
+		Run the SmartCheck test suite on a provided script
+	"""
 
 	is_request = False
 	if not test_subject:
@@ -106,7 +90,10 @@ def get_smartcheck(test_subject=None, mutation=None):
 @csrf.exempt
 @app.route('/get_mythril', methods=['POST'])
 def get_mythril(test_subject=None, mutation=None):
-	
+	"""
+		Run the Mythril test suite on a provided script
+	"""
+
 	is_request = False
 	if not test_subject:
 		test_subject = request.form.get('data')
@@ -153,6 +140,10 @@ def get_stats(code=None):
 @csrf.exempt
 @app.route('/get_mutations', methods=['POST'])
 def get_mutations(test_subject=None):
+	"""
+		Get all mutations for a given test_subject 
+		solidity script for a specified test suite.
+	"""
 
 	test_subject = request.form.get('data')	
 	output = []

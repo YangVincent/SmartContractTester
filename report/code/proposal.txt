@@ -1,0 +1,12 @@
+/// @param _recipient Address of the recipient 
+/// @param _amount Amount of wei to be sent 
+/// @param _debatingPeriod Time to debate 
+/// @param _proposalDeposit The new deposit
+
+if (!allowedRecipients[_recipient]
+    || _debatingPeriod < minProposalDebatePeriod
+    || _debatingPeriod > 8 weeks
+    || msg.value < proposalDeposit
+    || msg.sender == address(this) 
+    )
+        throw;

@@ -47,6 +47,15 @@ Vincent:
 * Implemented Oyente backend with docker containers. This takes in a Solidity
 file, runs it through Oyente, then parses and returns the results in a standardized
 manner. 
-* Wrote Introduction and Oyente testing suite sections in the paper. Revised and made
+* Implemented SmartCheck backend with docker containers. This takes in a Solidity
+file, runs it through SmartCheck, then parses and returns the results in a standardized
+manner. 
+* Wrote Introduction, Oyente, SmartCheck, choosing testing suites, and future work sections in the paper. Revised and made
 various other edits to the paper. 
 
+
+## Directory
+* /report holds the source for our report.
+* /Flask holds the actual project
+* /SmartContracts holds smart contracts we tested with
+* /TestRuns holds code used for analytics and tests

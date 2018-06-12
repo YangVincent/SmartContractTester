@@ -1,0 +1,17 @@
+function approve(address _spender, int _value)
+{
+  if (defined_condition.is_met()) {	
+    // Contract succeeds so send money	
+    returns bool(success) {
+      allowance[msg.send][_spender] = _value;
+      return true;
+    }
+  }else{
+    // Fails, so money is returned to spender
+    returns bool(failure) {
+      allowance[_spender][_spender] = _value;
+      return true;
+    }
+  }
+
+}

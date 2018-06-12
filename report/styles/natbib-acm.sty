@@ -1,0 +1,15 @@
+\usepackage{natbib}
+
+\newlength{\bibsectskip}
+\DeclareOption{sig-alternate}{\setlength{\bibsectskip}{-9pt plus 1pt}}
+\ProcessOptions
+
+\setcitestyle{comma,numbers,sort&compress,square}
+% \bibliographystyle{abbrvnat-no-isbn}
+
+\renewcommand{\bibsection}[0]{\section[References]{{References}\@mkboth{{\refname}}{{\refname}}}}
+\providecommand{\newblock}[0]{}
+\providecommand{\bibpreamble}{}
+\renewcommand{\bibpreamble}{\vspace{\bibsectskip}\raggedright}
+\renewcommand{\@biblabel}[1]{[#1]}
+\setlength{\bibsep}{1pt}

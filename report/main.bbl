@@ -1,0 +1,101 @@
+\begin{thebibliography}{10}
+
+\bibitem{nakamoto2008bitcoin}
+S.~Nakamoto, ``Bitcoin: A peer-to-peer electronic cash system,'' 2008.
+
+\bibitem{miller2014permacoin}
+A.~Miller, A.~Juels, E.~Shi, B.~Parno, and J.~Katz, ``Permacoin: Repurposing
+  bitcoin work for data preservation,'' in {\em Security and Privacy (SP), 2014
+  IEEE Symposium on}, IEEE, 2014.
+
+\bibitem{factombos}
+``Use case for factom: The world’s first blockchain operating system
+  (bos).,'' 2015.
+
+\bibitem{tapscott2016blockchain}
+D.~Tapscott and A.~Tapscott, {\em Blockchain revolution: how the technology
+  behind bitcoin is changing money, business, and the world}.
+\newblock Penguin, 2016.
+
+\bibitem{szabo1997idea}
+N.~Szabo, ``The idea of smart contracts,'' {\em Nick Szabo’s Papers and
+  Concise Tutorials}, vol.~6, 1997.
+
+\bibitem{luu2016making}
+L.~Luu, D.-H. Chu, H.~Olickel, P.~Saxena, and A.~Hobor, ``Making smart
+  contracts smarter,'' in {\em Proceedings of the 2016 ACM SIGSAC Conference on
+  Computer and Communications Security}, pp.~254--269, ACM, 2016.
+
+\bibitem{daian2016dao}
+P.~Daian, ``Analysis of the dao exploit,'' 2016.
+
+\bibitem{bartolettipompianuanalysis}
+M.~Bartoletti and L.~Pompianu, ``An empirical analysis of smart contracts:
+  Platforms, applications, and design patterns,'' 03 2017.
+
+\bibitem{systematicstudy}
+M.~Alharby and A.~van Moorsel, ``Blockchain based smart contracts : A
+  systematic mapping study,'' 08 2017.
+
+\bibitem{atzei2017survey}
+N.~Atzei, M.~Bartoletti, and T.~Cimoli, ``A survey of attacks on ethereum smart
+  contracts (sok),'' pp.~164--186, 2017.
+
+\bibitem{everts2018will}
+M.~Everts and F.~Muller, ``Will that smart contract really do what you expect
+  it to do?,'' tech. rep., TNO, 2018.
+
+\bibitem{manticore}
+``Manticore: Symbolic execution for humans,'' 2017.
+
+\bibitem{kochhar2017code}
+P.~S. Kochhar, D.~Lo, J.~Lawall, and N.~Nagappan, ``Code coverage and
+  postrelease defects: A large-scale study on open source projects,'' {\em IEEE
+  Transactions on Reliability}, vol.~66, no.~4, pp.~1213--1228, 2017.
+
+\bibitem{zhou2018security}
+E.~Zhou, S.~Hua, B.~Pi, J.~Sun, Y.~Nomura, K.~Yamashita, and H.~Kurihara,
+  ``Security assurance for smart contract,'' in {\em New Technologies, Mobility
+  and Security (NTMS), 2018 9th IFIP International Conference on}, pp.~1--5,
+  IEEE, 2018.
+
+\bibitem{king1976symbolic}
+J.~C. King, ``Symbolic execution and program testing,'' {\em Communications of
+  the ACM}, vol.~19, no.~7, pp.~385--394, 1976.
+
+\bibitem{sen2005cute}
+K.~Sen, D.~Marinov, and G.~Agha, ``Cute: a concolic unit testing engine for
+  c,'' in {\em ACM SIGSOFT Software Engineering Notes}, vol.~30, pp.~263--272,
+  ACM, 2005.
+
+\bibitem{porosity}
+https://github.com/comaeio/porosity, ``Porosity.''
+
+\bibitem{fontein2018comparison}
+R.~Fontein, ``Comparison of static analysis tooling for smart contracts on the
+  evm,'' 2018.
+
+\bibitem{smartcheck}
+SmartCheck, ``Smartcheck.''
+
+\bibitem{ntnutools}
+A.~Dika, ``Ethereum smart contracts: Security vulnerabilities and security
+  tools,''
+
+\bibitem{mythrilvuln}
+``Mythril detection capabilities,'' 2018.
+
+\bibitem{scvuln}
+``Smartcheck detection capabilities,'' 2018.
+
+\bibitem{smartdec}
+SmartDec, ``Smartdec.''
+
+\bibitem{minerone}
+SmartDec, ``Minerone analysis,'' 2018.
+
+\bibitem{mccabe1976complexity}
+T.~J. McCabe, ``A complexity measure,'' {\em IEEE Transactions on software
+  Engineering}, no.~4, pp.~308--320, 1976.
+
+\end{thebibliography}

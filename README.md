@@ -29,6 +29,9 @@ Doug:
 * Wrote related work, abstract, conclusion, analysis methods, and mutations & static analysis
 studies in the paper. 
 * Built the backend to support the user interface. This includes functions for mutating and producing static analysis statistics of the Solidity scripts. Moreover, performed Oyente and Mythril testing on each script including mutation and static analysis.
+* Wrote analysis regarding specific solidity scripts.
+* Supported the UI development with new Table displays and aggregated all test suites.
+* Made the test results asynchronous
 
 Joe: 
 * Created front-end for the platform. This uses the ace editor to display and edit code.

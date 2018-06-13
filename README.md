@@ -62,5 +62,4 @@ various other edits to the paper.
 ## Directory
 * /report holds the source for our report and the report.
 * /Flask holds the actual project
-* /tests/SmartContracts holds smart contracts we tested with
-* /tests holds code used for analytics and tests
+* /SmartContracts holds smart contracts we tested with
